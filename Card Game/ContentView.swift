@@ -7,27 +7,42 @@
 
 import SwiftUI
 
+
+
+
 struct ContentView: View {
+    @State var PlayerCard1 = "card12"
+    @State var PlayerCard2 = "card13"
+    @State var PlayerScore1=0
+    @State var PlayerScore2=0
+    
     var body: some View {
         ZStack{
             //I added background here
             Image("background-cloth")
             //then I put logo and cards on top of it stacking vertically
             VStack (){
+                /*I arranged everything vertically using VStack
+                 but I arranged card Horizontally because they are at the same level, same for text player 1 and player 2,but I wanted no. to be displayed below the text so I put them into VStack
+                 */
                 Spacer(minLength: 125)
                 
                 Image("logo")
                 Spacer(minLength: 60)
                 HStack{
                     Spacer()
-                    Image("card2")
+                    Image(PlayerCard1)
                     Spacer()
-                    Image("card12")
+                    Image(PlayerCard2)
                     Spacer()
                 }
                 Spacer(minLength: 40)
-                Image("button")
-                Spacer()
+                //Button
+                Button() {
+                    dealCards()
+                }label:{
+                    Image("button")
+                }
                 
                 
                 HStack{
@@ -37,7 +52,7 @@ struct ContentView: View {
                         Spacer()
                         Text("Player 1")
                             .font(.title)
-                        Text("0")
+                        Text(String(PlayerScore1))
                             .font(.title2)
                             .padding(.bottom)
                         Spacer(minLength: 30)
@@ -48,7 +63,7 @@ struct ContentView: View {
                         Spacer()
                         Text("Player 2")
                             .font(.title)
-                        Text("0")
+                        Text(String(PlayerScore2))
                             .font(.title2)
                             .padding(.bottom)
                         Spacer()
@@ -56,17 +71,60 @@ struct ContentView: View {
                     }
                     Spacer()
                     
-                    }
-                Spacer(minLength: 50)
                 }
-                
-                
+                Spacer(minLength: 50)
             }
-            .padding()
+            
+            
         }
+        .padding()
     }
-
-
+    
+    //Remember: When defining functions we do it below the body of UI in Swift, but in python we do it before the function is called.
+    
+    func dealCards(){
+        //things I have to execute is
+        //I have to randomize cards
+        //and increment the score by plus 1 and update it
+        
+        let PlayerValue1 = Int.random(in: 2...14)
+        let PlayerValue2 = Int.random(in: 2...14)
+        
+        PlayerCard1 = "card" + String(PlayerValue1)
+        PlayerCard2 = "card" + String(PlayerValue2)
+        
+        if PlayerValue1 > PlayerValue2{
+            PlayerScore1 = PlayerScore1 + 1
+            
+        }else if PlayerValue2 > PlayerValue1{
+            PlayerScore2 = PlayerScore2 + 1
+            
+        }else{
+            PlayerScore1 = PlayerScore1 + 1
+            PlayerScore2 = PlayerScore2 + 1
+            
+        }
+        
+        if PlayerScore1 >= 10 {
+            
+                print("Player 1 WINS!")
+                PlayerScore1 = 0
+                PlayerScore2 = 0
+            
+            
+        }else if PlayerScore2 >= 10 {
+            print("Player 2 WINS!")
+            PlayerScore2 = 0
+            PlayerScore1 = 0
+        }else{
+            
+        }
+        
+    }
+    
+    
+}
+// Without this we cant get preview of our UI on the screen
 #Preview {
     ContentView()
 }
