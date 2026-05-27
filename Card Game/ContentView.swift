@@ -8,13 +8,15 @@
 import SwiftUI
 
 
-
-
 struct ContentView: View {
-    @State var PlayerCard1 = "card12"
-    @State var PlayerCard2 = "card13"
+    @State var PlayerCard1 = "card"
+    @State var PlayerCard2 = "card"
     @State var PlayerScore1=0
     @State var PlayerScore2=0
+    
+    @State private var winMessage = ""
+    @State private var showWinAlert = false
+    
     
     var body: some View {
         ZStack{
@@ -22,28 +24,36 @@ struct ContentView: View {
             Image("background-cloth")
             //then I put logo and cards on top of it stacking vertically
             VStack (){
-                /*I arranged everything vertically using VStack
-                 but I arranged card Horizontally because they are at the same level, same for text player 1 and player 2,but I wanted no. to be displayed below the text so I put them into VStack
+                /*I arranged everything vertically using VStack but I arranged card Horizontally because they are at the same level, same for text player 1 and player 2,but I wanted no. to be displayed below the text so I put them into VStack
                  */
                 Spacer(minLength: 125)
                 
                 Image("logo")
                 Spacer(minLength: 60)
-                HStack{
-                    Spacer()
-                    Image(PlayerCard1)
-                    Spacer()
-                    Image(PlayerCard2)
-                    Spacer()
+                ZStack{
+                    
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(ImagePaint(image: Image("background-wood-cartoon")))
+                        .frame(width: 360, height: 300)
+                        .shadow(radius: 30)
+                        
+                    
+                    HStack{
+                        Spacer()
+                        Image(PlayerCard1)
+                        Spacer()
+                        Image(PlayerCard2)
+                        Spacer()
+                    }
                 }
-                Spacer(minLength: 40)
-                //Button
-                Button() {
-                    dealCards()
-                }label:{
-                    Image("button")
-                }
-                
+                    Spacer(minLength: 40)
+                    //Button
+                    Button() {
+                        dealCards()
+                    }label:{
+                        Image("button")
+                    }
+                    
                 
                 HStack{
                     Spacer()
@@ -52,10 +62,12 @@ struct ContentView: View {
                         Spacer()
                         Text("Player 1")
                             .font(.title)
+                            .foregroundStyle(.white)
                         Text(String(PlayerScore1))
+                            .foregroundStyle(.white)
                             .font(.title2)
                             .padding(.bottom)
-                        Spacer(minLength: 30)
+                        Spacer()
                         
                     }
                     Spacer()
@@ -63,7 +75,9 @@ struct ContentView: View {
                         Spacer()
                         Text("Player 2")
                             .font(.title)
+                            .foregroundStyle(.white)
                         Text(String(PlayerScore2))
+                            .foregroundStyle(.white)
                             .font(.title2)
                             .padding(.bottom)
                         Spacer()
@@ -110,12 +124,17 @@ struct ContentView: View {
                 print("Player 1 WINS!")
                 PlayerScore1 = 0
                 PlayerScore2 = 0
+                PlayerCard1 = "card"
+                PlayerCard2 = "card"
             
             
         }else if PlayerScore2 >= 10 {
             print("Player 2 WINS!")
             PlayerScore2 = 0
             PlayerScore1 = 0
+            PlayerCard1 = "card"
+            PlayerCard2 = "card"
+        
         }else{
             
         }
@@ -125,6 +144,7 @@ struct ContentView: View {
     
 }
 // Without this we cant get preview of our UI on the screen
-#Preview {
+#Preview("iPhone 16") {
     ContentView()
 }
+
