@@ -14,10 +14,7 @@ struct ContentView: View {
     @State var PlayerScore1=0
     @State var PlayerScore2=0
     
-    @State private var winMessage = ""
-    @State private var showWinAlert = false
-    
-    
+
     var body: some View {
         ZStack{
             //I added background here
@@ -47,6 +44,7 @@ struct ContentView: View {
                     }
                 }
                     Spacer(minLength: 40)
+                
                     //Button
                     Button() {
                         dealCards()
