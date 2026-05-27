@@ -6,9 +6,10 @@ The goal of this project was not just to make a game, but to understand how user
 
 The game works by generating two random cards whenever the player presses the **Deal** button. The player with the higher card earns a point, and the first player to reach 10 points wins the game. After someone wins, the scores reset automatically so the game can start again.
 
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-05-27 at 13 37 19" src="https://github.com/user-attachments/assets/cf3ad02e-ea8c-49f4-9395-43c0685028bc" />
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-05-27 at 13 37 36" src="https://github.com/user-attachments/assets/bade2759-3363-4268-a4a8-8f0bc2ddef26" />
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cf3ad02e-ea8c-49f4-9395-43c0685028bc" width="300" title="SwiftCard Duel - Starting State" alt="Gameplay screen showing the wooden board with two facedown cards and 0-0 scores.">
+  <img src="https://github.com/user-attachments/assets/bade2759-3363-4268-a4a8-8f0bc2ddef26" width="300" title="SwiftCard Duel - Player 1 Wins State" alt="Gameplay screen showing the wooden board with two faceup cards (King vs 10), Player 1 with 10 points, and the 'Player 1 WINS' console confirmation message.">
+</p>
 
 ---
 
