@@ -61,7 +61,6 @@ struct FirstScreen: View {
                 }
             }
         
-        
 struct SecondScreen: View {
     
     
