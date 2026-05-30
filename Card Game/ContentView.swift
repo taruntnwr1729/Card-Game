@@ -61,6 +61,7 @@ struct FirstScreen: View {
                 }
             }
         
+        
 struct SecondScreen: View {
     
     
@@ -70,6 +71,8 @@ struct SecondScreen: View {
     @State var PlayerCard2 = "card"
     @State var PlayerScore1=0
     @State var PlayerScore2=0
+    
+    @State private var cardScale: CGFloat = 1.0
     
     var body: some View {
         ZStack{
@@ -88,63 +91,73 @@ struct SecondScreen: View {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(ImagePaint(image: Image("background-wood-cartoon")))
                         .frame(width: 360, height: 300)
+                        .padding(   )
                         .shadow(radius: 30)
-                        
                     
-                    HStack{
+                    
+                    HStack(spacing: 20){
                         Spacer()
                         Image(PlayerCard1)
-                        Spacer()
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 140, height: 210)
+                            .scaleEffect(cardScale)
+                        
                         Image(PlayerCard2)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 140, height: 210)
+                            .scaleEffect(cardScale)
                         Spacer()
+                        
                     }
                 }
-                    Spacer(minLength: 40)
+                Spacer(minLength: 40)
                 
-                    //Button
-                    Button() {
-                        dealCards()
-                    }label:{
-                        Image("button")
-                    }
-                    
+                //Button
+                Button() {
+                    dealCards()
+                }label:{
+                    Image("button")
+                }
                 
-                HStack{
+                Spacer()
+                HStack {
                     Spacer()
-                    VStack{
-                        
-                        Spacer()
+                    
+                    VStack(spacing: 8) {
                         Text("Player 1")
-                            .font(.title)
+                            .font(.title2)
+                            .bold()
                             .foregroundStyle(.white)
                         Text(String(PlayerScore1))
+                            .font(.largeTitle)
+                            .bold()
                             .foregroundStyle(.white)
-                            .font(.title2)
-                            .padding(.bottom)
-                        Spacer()
-                        
                     }
-                    Spacer()
-                    VStack{
-                        Spacer()
+                    
+                    Spacer(minLength: 40)
+                   
+                    VStack(spacing: 8) {
                         Text("Player 2")
-                            .font(.title)
+                            .font(.title2)
+                            .bold()
                             .foregroundStyle(.white)
                         Text(String(PlayerScore2))
+                            .font(.largeTitle)
+                            .bold()
                             .foregroundStyle(.white)
-                            .font(.title2)
-                            .padding(.bottom)
-                        Spacer()
-                        
                     }
-                    Spacer()
                     
+                    Spacer()
                 }
+
                 Spacer(minLength: 50)
             }
             
             
         }
+        Spacer()
         .padding()
     }
     
@@ -154,48 +167,56 @@ struct SecondScreen: View {
         //I have to randomize cards
         //and increment the score by plus 1 and update it
         
-        let PlayerValue1 = Int.random(in: 2...14)
-        let PlayerValue2 = Int.random(in: 2...14)
         
-        PlayerCard1 = "card" + String(PlayerValue1)
-        PlayerCard2 = "card" + String(PlayerValue2)
+        cardScale = 0.8
         
-        if PlayerValue1 > PlayerValue2{
-            PlayerScore1 = PlayerScore1 + 1
-            
-        }else if PlayerValue2 > PlayerValue1{
-            PlayerScore2 = PlayerScore2 + 1
-            
-        }else{
-            PlayerScore1 = PlayerScore1 + 1
-            PlayerScore2 = PlayerScore2 + 1
-            
-        }
         
-        if PlayerScore1 >= 10 {
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.5)) {
+            cardScale = 1.0
             
+            let PlayerValue1 = Int.random(in: 2...14)
+            let PlayerValue2 = Int.random(in: 2...14)
+            
+            PlayerCard1 = "card" + String(PlayerValue1)
+            PlayerCard2 = "card" + String(PlayerValue2)
+            
+            if PlayerValue1 > PlayerValue2{
+                PlayerScore1 = PlayerScore1 + 1
+                
+            }else if PlayerValue2 > PlayerValue1{
+                PlayerScore2 = PlayerScore2 + 1
+                
+            }else{
+                PlayerScore1 = PlayerScore1 + 1
+                PlayerScore2 = PlayerScore2 + 1
+                
+            }
+            
+            if PlayerScore1 >= 10 {
+                
                 print("Player 1 WINS!")
                 PlayerScore1 = 0
                 PlayerScore2 = 0
                 PlayerCard1 = "card"
                 PlayerCard2 = "card"
-            
-            
-        }else if PlayerScore2 >= 10 {
-            print("Player 2 WINS!")
-            PlayerScore2 = 0
-            PlayerScore1 = 0
-            PlayerCard1 = "card"
-            PlayerCard2 = "card"
-        
-        }else{
+                
+                
+            }else if PlayerScore2 >= 10 {
+                print("Player 2 WINS!")
+                PlayerScore2 = 0
+                PlayerScore1 = 0
+                PlayerCard1 = "card"
+                PlayerCard2 = "card"
+                
+            }else{
+                
+            }
             
         }
-        
     }
+    
+}
+    #Preview {
+        RootView()
     }
 
-    
-#Preview {
-    RootView()
-}
