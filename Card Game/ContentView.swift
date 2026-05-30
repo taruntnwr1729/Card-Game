@@ -7,14 +7,71 @@
 
 import SwiftUI
 
+enum Screen{
+    
+    case firstPage
+    case secondPage
+    
+}
+struct RootView: View {
+    @State private var currentScreen: Screen = .firstPage
+    
+    var body: some View {
+        switch currentScreen {
+        case .firstPage:
+        
+            FirstScreen(currentScreen: $currentScreen)
+            
+        case .secondPage:
+            SecondScreen(currentScreen: $currentScreen)
+        }
+    }
+}
 
-struct ContentView: View {
+
+struct FirstScreen: View {
+    @Binding var currentScreen: Screen
+    @State private var isAnimated = false
+        
+    var body: some View {
+        
+        ZStack{
+            Image("background-plain")
+            Image("logo")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 250, height: 250)
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                        .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
+                        
+                        .opacity(isAnimated ? 1.0 : 0.0)
+                        .scaleEffect(isAnimated ? 1.0 : 0.6)
+                    
+                        .onAppear {
+                            withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                                isAnimated = true
+                            }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                    withAnimation {
+                                        currentScreen = .secondPage
+                                    }
+                                }
+                            }
+                        }
+                }
+            }
+        
+        
+struct SecondScreen: View {
+    
+    
+    @Binding var currentScreen: Screen
+    
     @State var PlayerCard1 = "card"
     @State var PlayerCard2 = "card"
     @State var PlayerScore1=0
     @State var PlayerScore2=0
     
-
     var body: some View {
         ZStack{
             //I added background here
@@ -92,7 +149,6 @@ struct ContentView: View {
         .padding()
     }
     
-    //Remember: When defining functions we do it below the body of UI in Swift, but in python we do it before the function is called.
     
     func dealCards(){
         //things I have to execute is
@@ -138,11 +194,9 @@ struct ContentView: View {
         }
         
     }
-    
-    
-}
-// Without this we cant get preview of our UI on the screen
-#Preview("iPhone 16") {
-    ContentView()
-}
+    }
 
+    
+#Preview {
+    RootView()
+}
